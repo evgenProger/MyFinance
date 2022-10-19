@@ -13,6 +13,7 @@
                 <property name="to_acc" fetchPlan="_base">
                     <property name="client" fetchPlan="_base"/>
                 </property>
+                <property name="types" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="transactionsDl">
                 <query>

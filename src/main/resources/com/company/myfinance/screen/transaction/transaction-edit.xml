@@ -12,8 +12,10 @@
                 <property name="to_acc" fetchPlan="_base">
                     <property name="client" fetchPlan="_base"/>
                 </property>
+                <property name="types" fetchPlan="_base"/>
             </fetchPlan>
             <loader/>
+            <collection id="typesDc" property="types"/>
         </instance>
     </data>
     <facets>
@@ -50,6 +52,21 @@
                 <textField id="transfer_amountField" property="transfer_amount"/>
             </column>
         </form>
+        <groupBox id="typesBox" caption="msg://com.company.myfinance.entity/Transaction.types">
+            <table id="typesTable" dataContainer="typesDc" width="100%" height="200px">
+                <actions>
+                    <action id="add" type="add"/>
+                    <action id="exclude" type="exclude"/>
+                </actions>
+                <columns>
+                    <column id="name"/>
+                </columns>
+                <buttonsPanel>
+                    <button action="typesTable.add"/>
+                    <button action="typesTable.exclude"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>

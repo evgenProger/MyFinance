@@ -6,6 +6,7 @@ import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
@@ -18,6 +19,12 @@ public class Type {
     @Column(name = "ID", nullable = false)
     @Id
     private UUID id;
+
+    @JoinTable(name = "TYPE_TRANSACTION_LINK",
+            joinColumns = @JoinColumn(name = "TYPE_ID"),
+            inverseJoinColumns = @JoinColumn(name = "TRANSACTION_ID"))
+    @ManyToMany
+    private List<Transaction> transactions;
 
     @JoinColumn(name = "CLIENT_ID", nullable = false)
     @NotNull
@@ -32,6 +39,14 @@ public class Type {
     @Column(name = "VERSION", nullable = false)
     @Version
     private Integer version;
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
 
     public String getName() {
         return name;
