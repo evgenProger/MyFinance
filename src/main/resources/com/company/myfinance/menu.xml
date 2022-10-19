@@ -8,6 +8,8 @@
         <item screen="BankAccount.browse"
               caption="msg://com.company.myfinance.screen.bankaccount/bankAccountBrowse.menu"/>
         <item screen="Type_.browse" caption="msg://com.company.myfinance.screen.type/typeBrowse.menu"/>
+        <item screen="Transaction_.browse"
+              caption="msg://com.company.myfinance.screen.transaction/transactionBrowse.menu"/>
     </menu>
 
 </menu-config>
