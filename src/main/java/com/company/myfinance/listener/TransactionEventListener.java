@@ -19,7 +19,7 @@ public class TransactionEventListener {
 
 
     @EventListener
-    public void onTransactionChangedBeforeCommit(EntityChangedEvent<Transaction> event) {
+    public void onTransactionChangedBeforeCommit(EntityChangedEvent<Transaction> event) throws Exception {
         if(event.getType() != EntityChangedEvent.Type.DELETED) {
             Id<Transaction> transactionId = event.getEntityId();
             Transaction transaction = dataManager.load(transactionId).one();
@@ -29,13 +29,19 @@ public class TransactionEventListener {
             if (transaction.getTo_acc() == null) {
                 widhdrowAccount(transaction);
             }
+            if (transaction.getFrom_acc() != null && transaction.getTo_acc() != null) {
+                transferMoney(transaction);
+            }
         }
     }
 
-    private void widhdrowAccount(Transaction transaction) {
+    private void widhdrowAccount(Transaction transaction) throws Exception {
         BankAccount bankAccount;
         bankAccount = transaction.getFrom_acc();
         BigDecimal subtract = bankAccount.getAmount().subtract(transaction.getTransfer_amount());
+        if (subtract.compareTo(BigDecimal.ZERO) < 0) {
+            throw new Exception("Недостаточно средств");
+        }
         bankAccount.setAmount(subtract);
         dataManager.save(bankAccount);
     }
@@ -47,4 +53,8 @@ public class TransactionEventListener {
         dataManager.save(bankAccount);
     }
 
+    private void transferMoney(Transaction transaction) throws Exception {
+        widhdrowAccount(transaction);
+        replenishAccount(transaction);
+    }
 }
