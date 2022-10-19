@@ -7,6 +7,7 @@
         <item screen="Client.browse" caption="msg://com.company.myfinance.screen.client/clientBrowse.menu"/>
         <item screen="BankAccount.browse"
               caption="msg://com.company.myfinance.screen.bankaccount/bankAccountBrowse.menu"/>
+        <item screen="Type_.browse" caption="msg://com.company.myfinance.screen.type/typeBrowse.menu"/>
     </menu>
 
 </menu-config>
