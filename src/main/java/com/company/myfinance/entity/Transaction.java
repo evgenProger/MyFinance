@@ -6,6 +6,7 @@ import io.jmix.core.metamodel.annotation.JmixEntity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
@@ -37,6 +38,20 @@ public class Transaction {
     @Column(name = "VERSION", nullable = false)
     @Version
     private Integer version;
+
+    @JoinTable(name = "TYPE_TRANSACTION_LINK",
+            joinColumns = @JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "TYPE_ID", referencedColumnName = "ID"))
+    @ManyToMany
+    private List<Type> types;
+
+    public List<Type> getTypes() {
+        return types;
+    }
+
+    public void setTypes(List<Type> types) {
+        this.types = types;
+    }
 
     public BigDecimal getTransfer_amount() {
         return transfer_amount;

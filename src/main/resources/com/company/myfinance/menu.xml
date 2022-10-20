@@ -6,6 +6,9 @@
         <item screen="themeSettingsScreen" caption="msg://io.jmix.ui.app.themesettings/themeSettings.caption"/>
         <item screen="BancAccount.browse"
               caption="msg://com.company.myfinance.screen.bancaccount/bancAccountBrowse.menu"/>
+        <item screen="Transaction_.browse"
+              caption="msg://com.company.myfinance.screen.transaction/transactionBrowse.menu"/>
+        <item screen="Type_.browse" caption="msg://com.company.myfinance.screen.type/typeBrowse.menu"/>
     </menu>
 
 </menu-config>
