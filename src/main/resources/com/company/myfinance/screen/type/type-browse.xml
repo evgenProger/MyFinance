@@ -8,7 +8,6 @@
                     class="com.company.myfinance.entity.Type">
             <fetchPlan extends="_base">
                 <property name="transactions" fetchPlan="_base"/>
-                <property name="client" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="typesDl">
                 <query>
@@ -47,7 +46,6 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="client"/>
                 <column id="name"/>
             </columns>
             <simplePagination/>

@@ -9,10 +9,13 @@ import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import io.jmix.security.authentication.JmixUserDetails;
 import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
@@ -23,9 +26,12 @@ import java.util.UUID;
 public class User implements JmixUserDetails, HasTimeZone {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     @JmixGeneratedValue
     private UUID id;
+
+    @OneToMany(mappedBy = "user")
+    private List<BankAccount> bank_account;
 
     @Version
     @Column(name = "VERSION", nullable = false)
@@ -34,9 +40,10 @@ public class User implements JmixUserDetails, HasTimeZone {
     @Column(name = "USERNAME", nullable = false)
     protected String username;
 
+    @NotNull
     @Secret
     @SystemLevel
-    @Column(name = "PASSWORD")
+    @Column(name = "PASSWORD", nullable = false)
     protected String password;
 
     @Column(name = "FIRST_NAME")
@@ -57,6 +64,14 @@ public class User implements JmixUserDetails, HasTimeZone {
 
     @Transient
     protected Collection<? extends GrantedAuthority> authorities;
+
+    public List<BankAccount> getBank_account() {
+        return bank_account;
+    }
+
+    public void setBank_account(List<BankAccount> bank_account) {
+        this.bank_account = bank_account;
+    }
 
     public UUID getId() {
         return id;

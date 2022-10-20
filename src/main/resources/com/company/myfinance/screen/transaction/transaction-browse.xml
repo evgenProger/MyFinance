@@ -8,10 +8,8 @@
                     class="com.company.myfinance.entity.Transaction">
             <fetchPlan extends="_base">
                 <property name="from_acc" fetchPlan="_base">
-                    <property name="client" fetchPlan="_base"/>
                 </property>
                 <property name="to_acc" fetchPlan="_base">
-                    <property name="client" fetchPlan="_base"/>
                 </property>
                 <property name="types" fetchPlan="_base"/>
             </fetchPlan>

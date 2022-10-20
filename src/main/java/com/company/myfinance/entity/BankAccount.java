@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @JmixEntity
 @Table(name = "BANK_ACCOUNT", indexes = {
-        @Index(name = "IDX_BANK_ACCOUNT_CLIENT", columnList = "CLIENT_ID")
+        @Index(name = "IDX_BANK_ACCOUNT_USER", columnList = "USER_ID")
 })
 @Entity
 public class BankAccount {
@@ -23,9 +23,9 @@ public class BankAccount {
     @Column(name = "AMOUNT", precision = 19, scale = 2)
     private BigDecimal amount;
 
-    @JoinColumn(name = "CLIENT_ID")
+    @JoinColumn(name = "USER_ID")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Client client;
+    private User user;
 
     @InstanceName
     @Column(name = "NAME", nullable = false)
@@ -36,20 +36,20 @@ public class BankAccount {
     @Version
     private Integer version;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
     }
 
     public BigDecimal getAmount() {
