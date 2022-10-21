@@ -5,7 +5,9 @@
     <data readOnly="true">
         <collection id="usersDc"
                     class="com.company.myfinance.entity.User">
-            <fetchPlan extends="_base"/>
+            <fetchPlan extends="_base">
+                <property name="bank_account" fetchPlan="_base"/>
+            </fetchPlan>
             <loader id="usersDl">
                 <query>
                     <![CDATA[select e from User e order by e.username]]>
@@ -55,6 +57,7 @@
                 <column id="email"/>
                 <column id="timeZoneId"/>
                 <column id="active"/>
+                <column id="bank_account"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"

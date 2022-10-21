@@ -5,6 +5,7 @@ import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @JmixEntity
@@ -19,7 +20,7 @@ public class BancAccount {
     private UUID id;
 
     @Column(name = "AMOUNT")
-    private String amount;
+    private BigDecimal amount;
 
     @JoinColumn(name = "USER_ID")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,6 +33,14 @@ public class BancAccount {
     @Column(name = "VERSION", nullable = false)
     @Version
     private Integer version;
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
 
     public String getName() {
         return name;
@@ -47,14 +56,6 @@ public class BancAccount {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount;
     }
 
     public Integer getVersion() {

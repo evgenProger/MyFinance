@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="myFinance">
+        <addColumn tableName="USER_">
+            <column name="BANK_ACCOUNT_ID" type="UUID"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2" author="myFinance">
+        <createIndex indexName="IDX_USER__BANK_ACCOUNT" tableName="USER_">
+            <column name="BANK_ACCOUNT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="BANK_ACCOUNT_ID" baseTableName="USER_"
+                                 constraintName="FK_USER__ON_BANK_ACCOUNT" referencedColumnNames="ID"
+                                 referencedTableName="BANC_ACCOUNT"/>
+    </changeSet>
+</databaseChangeLog>

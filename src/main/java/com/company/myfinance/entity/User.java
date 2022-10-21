@@ -9,6 +9,7 @@ import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import io.jmix.security.authentication.JmixUserDetails;
 import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.Collection;
@@ -23,9 +24,13 @@ import java.util.UUID;
 public class User implements JmixUserDetails, HasTimeZone {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     @JmixGeneratedValue
     private UUID id;
+
+    @JoinColumn
+    @ManyToOne(fetch = FetchType.LAZY)
+    private BancAccount bank_account;
 
     @Version
     @Column(name = "VERSION", nullable = false)
@@ -57,6 +62,14 @@ public class User implements JmixUserDetails, HasTimeZone {
 
     @Transient
     protected Collection<? extends GrantedAuthority> authorities;
+
+    public void setBank_account(BancAccount bank_account) {
+        this.bank_account = bank_account;
+    }
+
+    public BancAccount getBank_account() {
+        return bank_account;
+    }
 
     public UUID getId() {
         return id;
