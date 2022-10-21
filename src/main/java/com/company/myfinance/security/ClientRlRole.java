@@ -18,6 +18,4 @@ public interface ClientRlRole {
             entityClass = User.class,
             where = "{E}.bank_account.user.id = :current_user_id")
     void user();
-
-
 }
