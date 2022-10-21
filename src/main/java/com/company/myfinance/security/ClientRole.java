@@ -15,13 +15,8 @@ import io.jmix.securityui.role.annotation.ScreenPolicy;
 @ResourceRole(name = "Client", code = "client", scope = "UI")
 public interface ClientRole {
     @MenuPolicy(menuIds = {"BancAccount.browse", "Transaction_.browse"})
-    @ScreenPolicy(screenIds = {"BancAccount.browse", "Transaction_.browse"})
+    @ScreenPolicy(screenIds = {"BancAccount.browse", "Transaction_.browse", "Transaction_.edit", "BancAccount.edit"})
     void screens();
-
-    @EntityAttributePolicy(entityClass = BancAccount.class, attributes = {"user", "name"}, action = EntityAttributePolicyAction.MODIFY)
-    @EntityAttributePolicy(entityClass = BancAccount.class, attributes = {"id", "version", "amount"}, action = EntityAttributePolicyAction.VIEW)
-    @EntityPolicy(entityClass = BancAccount.class, actions = {EntityPolicyAction.CREATE, EntityPolicyAction.READ})
-    void bancAccount();
 
     @EntityPolicy(entityClass = User.class, actions = EntityPolicyAction.READ)
     @EntityAttributePolicy(entityClass = User.class, attributes = {"username", "bank_account"}, action = EntityAttributePolicyAction.VIEW)
@@ -33,4 +28,9 @@ public interface ClientRole {
     @EntityPolicy(entityClass = Transaction.class, actions = EntityPolicyAction.ALL)
     @EntityAttributePolicy(entityClass = Transaction.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
     void transaction();
+
+    @EntityAttributePolicy(entityClass = BancAccount.class, attributes = {"amount", "user", "name"}, action = EntityAttributePolicyAction.MODIFY)
+    @EntityAttributePolicy(entityClass = BancAccount.class, attributes = {"id", "version"}, action = EntityAttributePolicyAction.VIEW)
+    @EntityPolicy(entityClass = BancAccount.class, actions = {EntityPolicyAction.CREATE, EntityPolicyAction.READ, EntityPolicyAction.UPDATE})
+    void bancAccount();
 }

@@ -1,6 +1,7 @@
 package com.company.myfinance.security;
 
 import com.company.myfinance.entity.BancAccount;
+import com.company.myfinance.entity.Transaction;
 import com.company.myfinance.entity.User;
 import io.jmix.security.role.annotation.JpqlRowLevelPolicy;
 import io.jmix.security.role.annotation.RowLevelRole;
@@ -18,4 +19,9 @@ public interface ClientRlRole {
             entityClass = User.class,
             where = "{E}.bank_account.user.id = :current_user_id")
     void user();
+
+    @JpqlRowLevelPolicy(
+            entityClass = Transaction.class,
+            where = "{E}.to_acc_id.user.id = :current_user_id")
+    void transaction();
 }
