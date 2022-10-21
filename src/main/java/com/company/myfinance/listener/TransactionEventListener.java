@@ -17,7 +17,6 @@ public class TransactionEventListener {
     @Autowired
     private DataManager dataManager;
 
-
     @EventListener
     public void onTransactionChangedBeforeCommit(EntityChangedEvent<Transaction> event) throws Exception {
         if(event.getType() != EntityChangedEvent.Type.DELETED) {
