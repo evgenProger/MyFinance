@@ -1,9 +1,9 @@
 package com.company.myfinance.security;
 
-import com.company.myfinance.entity.BancAccount;
+import com.company.myfinance.entity.BankAccount;
+import com.company.myfinance.entity.Client;
 import com.company.myfinance.entity.Transaction;
 import com.company.myfinance.entity.Type;
-import com.company.myfinance.entity.User;
 import io.jmix.security.model.EntityAttributePolicyAction;
 import io.jmix.security.model.EntityPolicyAction;
 import io.jmix.security.role.annotation.EntityAttributePolicy;
@@ -12,25 +12,32 @@ import io.jmix.security.role.annotation.ResourceRole;
 import io.jmix.securityui.role.annotation.MenuPolicy;
 import io.jmix.securityui.role.annotation.ScreenPolicy;
 
-@ResourceRole(name = "Client", code = "client", scope = "UI")
+@ResourceRole(name = "ClientRole", code = "client-role", scope = "UI")
 public interface ClientRole {
-    @MenuPolicy(menuIds = {"BancAccount.browse", "Transaction_.browse"})
-    @ScreenPolicy(screenIds = {"BancAccount.browse", "Transaction_.browse", "Transaction_.edit", "BancAccount.edit"})
-    void screens();
-
-    @EntityPolicy(entityClass = User.class, actions = EntityPolicyAction.READ)
-    @EntityAttributePolicy(entityClass = User.class, attributes = {"username", "bank_account"}, action = EntityAttributePolicyAction.VIEW)
-    void user();
-
-    @EntityAttributePolicy(entityClass = Type.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
-    void type();
-
-    @EntityPolicy(entityClass = Transaction.class, actions = EntityPolicyAction.ALL)
-    @EntityAttributePolicy(entityClass = Transaction.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
-    void transaction();
-
-    @EntityAttributePolicy(entityClass = BancAccount.class, attributes = {"amount", "user", "name"}, action = EntityAttributePolicyAction.MODIFY)
-    @EntityAttributePolicy(entityClass = BancAccount.class, attributes = {"id", "version"}, action = EntityAttributePolicyAction.VIEW)
-    @EntityPolicy(entityClass = BancAccount.class, actions = {EntityPolicyAction.CREATE, EntityPolicyAction.READ, EntityPolicyAction.UPDATE})
-    void bancAccount();
+	@MenuPolicy(menuIds = {"BankAccount.browse", "Type_.browse", "Transaction_.browse", "Client.browse"})
+	@ScreenPolicy(screenIds = {"BankAccount.browse", "Type_.browse", "Transaction_.browse", "BankAccount.edit",
+			"LoginScreen", "MainScreen", "Transaction_.edit", "Type_.edit", "Client.browse"})
+	void screens();
+	
+	@EntityAttributePolicy(entityClass = Type.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
+	@EntityPolicy(entityClass = Type.class, actions = EntityPolicyAction.ALL)
+	void type();
+	
+	@EntityAttributePolicy(entityClass = Transaction.class, attributes = {"from_acc", "to_acc", "create_date",
+			"transfer_amount", "types"}, action = EntityAttributePolicyAction.MODIFY)
+	@EntityAttributePolicy(entityClass = Transaction.class, attributes = {"id", "version"}, action =
+			EntityAttributePolicyAction.VIEW)
+	@EntityPolicy(entityClass = Transaction.class, actions = {EntityPolicyAction.CREATE, EntityPolicyAction.READ})
+	void transaction();
+	
+	@EntityAttributePolicy(entityClass = BankAccount.class, attributes = {"name", "client"}, action =
+			EntityAttributePolicyAction.MODIFY)
+	@EntityAttributePolicy(entityClass = BankAccount.class, attributes = {"id", "amount", "version"}, action =
+			EntityAttributePolicyAction.VIEW)
+	@EntityPolicy(entityClass = BankAccount.class, actions = EntityPolicyAction.ALL)
+	void bankAccount();
+	
+	@EntityAttributePolicy(entityClass = Client.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
+	@EntityPolicy(entityClass = Client.class, actions = EntityPolicyAction.ALL)
+	void client();
 }

@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         xmlns:c="http://jmix.io/schema/ui/jpql-condition"
-        caption="msg://transactionBrowse.caption"
-        focusComponent="transactionsTable">
+        caption="msg://bankAccountBrowse.caption"
+        focusComponent="bankAccountsTable">
     <data readOnly="true">
-        <collection id="transactionsDc"
-                    class="com.company.myfinance.entity.Transaction">
+        <collection id="bankAccountsDc"
+                    class="com.company.myfinance.entity.BankAccount">
             <fetchPlan extends="_base">
-                <property name="from_acc" fetchPlan="_base">
-                    <property name="client" fetchPlan="_base"/>
-                </property>
-                <property name="to_acc" fetchPlan="_base">
-                    <property name="client" fetchPlan="_base"/>
-                </property>
-                <property name="types" fetchPlan="_base"/>
+                <property name="client" fetchPlan="_base"/>
             </fetchPlan>
-            <loader id="transactionsDl">
+            <loader id="bankAccountsDl">
                 <query>
-                    <![CDATA[select e from Transaction_ e]]>
+                    <![CDATA[select e from BankAccount e]]>
                 </query>
             </loader>
         </collection>
@@ -38,31 +32,30 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="transactionsTable" spacing="true">
+    <layout expand="bankAccountsTable" spacing="true">
         <filter id="filter"
-                dataLoader="transactionsDl">
+                dataLoader="bankAccountsDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="transactionsTable"
+        <groupTable id="bankAccountsTable"
                     width="100%"
-                    dataContainer="transactionsDc">
+                    dataContainer="bankAccountsDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="from_acc"/>
-                <column id="to_acc"/>
-                <column id="create_date"/>
-                <column id="transfer_amount"/>
+                <column id="amount"/>
+                <column id="client"/>
+                <column id="name"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="transactionsTable.create"/>
-                <button id="editBtn" action="transactionsTable.edit"/>
-                <button id="removeBtn" action="transactionsTable.remove"/>
+                <button id="createBtn" action="bankAccountsTable.create"/>
+                <button id="editBtn" action="bankAccountsTable.edit"/>
+                <button id="removeBtn" action="bankAccountsTable.remove"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

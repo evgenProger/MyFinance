@@ -5,44 +5,44 @@ import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
-@Table(name = "TYPE_", indexes = {
-        @Index(name = "IDX_TYPE__USER", columnList = "USER_ID")
-})
+@Table(name = "TYPE_", indexes = {@Index(name = "IDX_TYPE__CLIENT", columnList = "CLIENT_ID")})
 @Entity(name = "Type_")
 public class Type {
     @JmixGeneratedValue
     @Column(name = "ID", nullable = false)
     @Id
     private UUID id;
-
-    @JoinTable(name = "TYPE_TRANSACTION_LINK",
-            joinColumns = @JoinColumn(name = "TYPE_ID", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "ID"))
+    
+    @JoinTable(name = "TYPE_TRANSACTION_LINK", joinColumns = @JoinColumn(name = "TYPE_ID", referencedColumnName = "ID"
+    ), inverseJoinColumns = @JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "ID"))
     @ManyToMany
-    private List<Transaction> transaction_id;
-
+    private List<Transaction> transactions;
+    
+    @JoinColumn(name = "CLIENT_ID", nullable = false)
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private Client client;
+    
     @InstanceName
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
+    @NotNull
     private String name;
-
-    @JoinColumn(name = "USER_ID")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
-
+    
     @Column(name = "VERSION", nullable = false)
     @Version
     private Integer version;
-
-    public User getUser() {
-        return user;
+    
+    public List<Transaction> getTransactions() {
+        return transactions;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
     public String getName() {
@@ -53,12 +53,12 @@ public class Type {
         this.name = name;
     }
 
-    public List<Transaction> getTransaction_id() {
-        return transaction_id;
+    public Client getClient() {
+        return client;
     }
 
-    public void setTransaction_id(List<Transaction> transaction_id) {
-        this.transaction_id = transaction_id;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public Integer getVersion() {

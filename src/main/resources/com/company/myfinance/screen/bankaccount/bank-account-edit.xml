@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
-        caption="msg://bancAccountEdit.caption"
+        caption="msg://bankAccountEdit.caption"
         focusComponent="form">
     <data>
-        <instance id="bancAccountDc"
-                  class="com.company.myfinance.entity.BancAccount">
+        <instance id="bankAccountDc"
+                  class="com.company.myfinance.entity.BankAccount">
             <fetchPlan extends="_base">
-                <property name="user" fetchPlan="_base"/>
+                <property name="client" fetchPlan="_base"/>
             </fetchPlan>
             <loader/>
         </instance>
@@ -27,10 +27,10 @@
     <dialogMode height="600"
                 width="800"/>
     <layout spacing="true" expand="editActions">
-        <form id="form" dataContainer="bancAccountDc">
+        <form id="form" dataContainer="bankAccountDc">
             <column width="350px">
                 <textField id="amountField" property="amount"/>
-                <entityPicker id="userField" property="user">
+                <entityPicker id="clientField" property="client">
                     <actions>
                         <action id="entityLookup" type="entity_lookup"/>
                         <action id="entityClear" type="entity_clear"/>

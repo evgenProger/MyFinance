@@ -18,60 +18,58 @@ import java.util.UUID;
 
 @JmixEntity
 @Entity
-@Table(name = "USER_", indexes = {
-        @Index(name = "IDX_USER__ON_USERNAME", columnList = "USERNAME", unique = true),
-        @Index(name = "IDX_USER__BANK_ACCOUNT", columnList = "BANK_ACCOUNT_ID")
-})
+@Table(name = "USER_", indexes = {@Index(name = "IDX_USER__ON_USERNAME", columnList = "USERNAME", unique = true),
+    @Index(name = "IDX_USER__CLIENT", columnList = "CLIENT_ID")})
 public class User implements JmixUserDetails, HasTimeZone {
-
+    
     @Id
     @Column(name = "ID", nullable = false)
     @JmixGeneratedValue
     private UUID id;
-
-    @JoinColumn(name = "BANK_ACCOUNT_ID")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private BancAccount bank_account;
-
+    
+    @JoinColumn(name = "CLIENT_ID")
+    @OneToOne(fetch = FetchType.LAZY)
+    private Client client;
+    
     @Version
     @Column(name = "VERSION", nullable = false)
     private Integer version;
-
+    
     @Column(name = "USERNAME", nullable = false)
     protected String username;
-
+    
     @Secret
     @SystemLevel
     @Column(name = "PASSWORD")
     protected String password;
-
+    
     @Column(name = "FIRST_NAME")
     protected String firstName;
-
+    
     @Column(name = "LAST_NAME")
     protected String lastName;
-
+    
     @Email
     @Column(name = "EMAIL")
     protected String email;
-
+    
     @Column(name = "ACTIVE")
     protected Boolean active = true;
-
+    
     @Column(name = "TIME_ZONE_ID")
     protected String timeZoneId;
-
+    
     @Transient
     protected Collection<? extends GrantedAuthority> authorities;
-
-    public BancAccount getBank_account() {
-        return bank_account;
+    
+    public Client getClient() {
+        return client;
     }
-
-    public void setBank_account(BancAccount bank_account) {
-        this.bank_account = bank_account;
+    
+    public void setClient(Client client) {
+        this.client = client;
     }
-
+    
     public UUID getId() {
         return id;
     }

@@ -7,16 +7,15 @@
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
     <changeSet id="1" author="myFinance">
         <addColumn tableName="USER_">
-            <column name="BANK_ACCOUNT_ID" type="UUID"/>
+            <column name="CLIENT_ID" type="UUID"/>
         </addColumn>
     </changeSet>
     <changeSet id="2" author="myFinance">
-        <createIndex indexName="IDX_USER__BANK_ACCOUNT" tableName="USER_">
-            <column name="BANK_ACCOUNT_ID"/>
+        <createIndex indexName="IDX_USER__CLIENT" tableName="USER_">
+            <column name="CLIENT_ID"/>
         </createIndex>
 
-        <addForeignKeyConstraint baseColumnNames="BANK_ACCOUNT_ID" baseTableName="USER_"
-                                 constraintName="FK_USER__ON_BANK_ACCOUNT" referencedColumnNames="ID"
-                                 referencedTableName="BANC_ACCOUNT"/>
+        <addForeignKeyConstraint baseColumnNames="CLIENT_ID" baseTableName="USER_" constraintName="FK_USER__ON_CLIENT"
+                                 referencedColumnNames="ID" referencedTableName="USER_"/>
     </changeSet>
 </databaseChangeLog>

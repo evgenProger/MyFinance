@@ -6,8 +6,12 @@
         <instance id="transactionDc"
                   class="com.company.myfinance.entity.Transaction">
             <fetchPlan extends="_base">
-                <property name="from_acc" fetchPlan="_base"/>
-                <property name="to_acc_id" fetchPlan="_base"/>
+                <property name="from_acc" fetchPlan="_base">
+                    <property name="client" fetchPlan="_base"/>
+                </property>
+                <property name="to_acc" fetchPlan="_base">
+                    <property name="client" fetchPlan="_base"/>
+                </property>
                 <property name="types" fetchPlan="_base"/>
             </fetchPlan>
             <loader/>
@@ -38,7 +42,7 @@
                         <action id="entityClear" type="entity_clear"/>
                     </actions>
                 </entityPicker>
-                <entityPicker id="to_acc_idField" property="to_acc_id">
+                <entityPicker id="to_accField" property="to_acc">
                     <actions>
                         <action id="entityLookup" type="entity_lookup"/>
                         <action id="entityClear" type="entity_clear"/>
@@ -55,6 +59,7 @@
                     <action id="exclude" type="exclude"/>
                 </actions>
                 <columns>
+                    <column id="name"/>
                 </columns>
                 <buttonsPanel>
                     <button action="typesTable.add"/>

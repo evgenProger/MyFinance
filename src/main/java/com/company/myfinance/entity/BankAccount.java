@@ -5,43 +5,35 @@ import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @JmixEntity
-@Table(name = "BANC_ACCOUNT", indexes = {
-        @Index(name = "IDX_BANC_ACCOUNT_USER", columnList = "USER_ID")
-})
+@Table(name = "BANK_ACCOUNT", indexes = {@Index(name = "IDX_BANK_ACCOUNT_CLIENT", columnList = "CLIENT_ID")})
 @Entity
-public class BancAccount {
+public class BankAccount {
     @JmixGeneratedValue
     @Column(name = "ID", nullable = false)
     @Id
     private UUID id;
-
-    @Column(name = "AMOUNT")
+    
+    @Column(name = "AMOUNT", precision = 19, scale = 2)
     private BigDecimal amount;
-
-    @JoinColumn(name = "USER_ID")
+    
+    @JoinColumn(name = "CLIENT_ID")
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
-
+    private Client client;
+    
     @InstanceName
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
+    @NotNull
     private String name;
-
+    
     @Column(name = "VERSION", nullable = false)
     @Version
     private Integer version;
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
+    
     public String getName() {
         return name;
     }
@@ -50,12 +42,20 @@ public class BancAccount {
         this.name = name;
     }
 
-    public User getUser() {
-        return user;
+    public Client getClient() {
+        return client;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 
     public Integer getVersion() {
