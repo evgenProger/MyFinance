@@ -18,50 +18,52 @@ import java.util.UUID;
 
 @JmixEntity
 @Entity
-@Table(name = "USER_", indexes = {@Index(name = "IDX_USER__ON_USERNAME", columnList = "USERNAME", unique = true),
-    @Index(name = "IDX_USER__CLIENT", columnList = "CLIENT_ID")})
+@Table(name = "USER_", indexes = {
+        @Index(name = "IDX_USER__ON_USERNAME", columnList = "USERNAME", unique = true),
+        @Index(name = "IDX_USER__CLIENT", columnList = "CLIENT_ID")
+})
 public class User implements JmixUserDetails, HasTimeZone {
-    
+
     @Id
     @Column(name = "ID", nullable = false)
     @JmixGeneratedValue
     private UUID id;
-    
+
     @JoinColumn(name = "CLIENT_ID")
     @OneToOne(fetch = FetchType.LAZY)
     private Client client;
-    
+
     @Version
     @Column(name = "VERSION", nullable = false)
     private Integer version;
-    
+
     @Column(name = "USERNAME", nullable = false)
     protected String username;
-    
+
     @Secret
     @SystemLevel
     @Column(name = "PASSWORD")
     protected String password;
-    
+
     @Column(name = "FIRST_NAME")
     protected String firstName;
-    
+
     @Column(name = "LAST_NAME")
     protected String lastName;
-    
+
     @Email
     @Column(name = "EMAIL")
     protected String email;
-    
+
     @Column(name = "ACTIVE")
     protected Boolean active = true;
-    
+
     @Column(name = "TIME_ZONE_ID")
     protected String timeZoneId;
-    
+
     @Transient
     protected Collection<? extends GrantedAuthority> authorities;
-    
+
     public Client getClient() {
         return client;
     }

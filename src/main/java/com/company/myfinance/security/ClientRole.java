@@ -14,9 +14,8 @@ import io.jmix.securityui.role.annotation.ScreenPolicy;
 
 @ResourceRole(name = "ClientRole", code = "client-role", scope = "UI")
 public interface ClientRole {
-	@MenuPolicy(menuIds = {"BankAccount.browse", "Type_.browse", "Transaction_.browse", "Client.browse"})
-	@ScreenPolicy(screenIds = {"BankAccount.browse", "Type_.browse", "Transaction_.browse", "BankAccount.edit",
-			"LoginScreen", "MainScreen", "Transaction_.edit", "Type_.edit", "Client.browse"})
+	@MenuPolicy(menuIds = {"BankAccount.browse", "Transaction_.browse", "Client.browse"})
+	@ScreenPolicy(screenIds = {"BankAccount.browse", "Transaction_.browse", "BankAccount.edit", "LoginScreen", "MainScreen", "Transaction_.edit", "Type_.edit", "Client.browse", "Type_.browse"})
 	void screens();
 	
 	@EntityAttributePolicy(entityClass = Type.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
@@ -27,13 +26,11 @@ public interface ClientRole {
 			"transfer_amount", "types"}, action = EntityAttributePolicyAction.MODIFY)
 	@EntityAttributePolicy(entityClass = Transaction.class, attributes = {"id", "version"}, action =
 			EntityAttributePolicyAction.VIEW)
-	@EntityPolicy(entityClass = Transaction.class, actions = {EntityPolicyAction.CREATE, EntityPolicyAction.READ})
+	@EntityPolicy(entityClass = Transaction.class, actions = {EntityPolicyAction.CREATE, EntityPolicyAction.READ, EntityPolicyAction.UPDATE})
 	void transaction();
 	
-	@EntityAttributePolicy(entityClass = BankAccount.class, attributes = {"name", "client"}, action =
-			EntityAttributePolicyAction.MODIFY)
-	@EntityAttributePolicy(entityClass = BankAccount.class, attributes = {"id", "amount", "version"}, action =
-			EntityAttributePolicyAction.VIEW)
+	@EntityAttributePolicy(entityClass = BankAccount.class, attributes = {"name", "client", "amount"}, action = EntityAttributePolicyAction.MODIFY)
+	@EntityAttributePolicy(entityClass = BankAccount.class, attributes = {"id", "version"}, action = EntityAttributePolicyAction.VIEW)
 	@EntityPolicy(entityClass = BankAccount.class, actions = EntityPolicyAction.ALL)
 	void bankAccount();
 	
