@@ -4,12 +4,12 @@
     <menu id="application" caption="msg://com.company.myfinance/menu.application" insertBefore="administration">
         <item screen="User.browse" caption="msg://com.company.myfinance.screen.user/UserBrowse.caption"/>
         <item screen="themeSettingsScreen" caption="msg://io.jmix.ui.app.themesettings/themeSettings.caption"/>
-        <item screen="Client.browse" caption="msg://com.company.myfinance.screen.client/clientBrowse.menu"/>
         <item screen="BankAccount.browse"
               caption="msg://com.company.myfinance.screen.bankaccount/bankAccountBrowse.menu"/>
         <item screen="Type_.browse" caption="msg://com.company.myfinance.screen.type/typeBrowse.menu"/>
         <item screen="Transaction_.browse"
               caption="msg://com.company.myfinance.screen.transaction/transactionBrowse.menu"/>
+        <item screen="Client.browse" caption="msg://com.company.myfinance.screen.client/clientBrowse.menu"/>
     </menu>
 
 </menu-config>

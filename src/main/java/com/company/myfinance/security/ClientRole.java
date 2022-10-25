@@ -14,8 +14,8 @@ import io.jmix.securityui.role.annotation.ScreenPolicy;
 
 @ResourceRole(name = "ClientRole", code = "client-role", scope = "UI")
 public interface ClientRole {
-	@MenuPolicy(menuIds = {"BankAccount.browse", "Transaction_.browse", "Client.browse"})
-	@ScreenPolicy(screenIds = {"BankAccount.browse", "Transaction_.browse", "BankAccount.edit", "LoginScreen", "MainScreen", "Transaction_.edit", "Type_.edit", "Client.browse", "Type_.browse"})
+	@MenuPolicy(menuIds = {"BankAccount.browse", "Transaction_.browse"})
+	@ScreenPolicy(screenIds = {"BankAccount.browse", "Transaction_.browse", "BankAccount.edit", "LoginScreen", "MainScreen", "Transaction_.edit", "Type_.edit", "Type_.browse"})
 	void screens();
 	
 	@EntityAttributePolicy(entityClass = Type.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)

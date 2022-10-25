@@ -6,7 +6,7 @@
         <instance id="clientDc"
                   class="com.company.myfinance.entity.Client">
             <fetchPlan extends="_base">
-                <property name="client" fetchPlan="_base"/>
+                <property name="user" fetchPlan="_base"/>
             </fetchPlan>
             <loader/>
         </instance>
@@ -35,6 +35,12 @@
                 <textField id="emailField" property="email"/>
                 <checkBox id="activeField" property="active"/>
                 <textField id="timeZoneIdField" property="timeZoneId"/>
+                <entityPicker id="userField" property="user">
+                    <actions>
+                        <action id="entityLookup" type="entity_lookup"/>
+                        <action id="entityClear" type="entity_clear"/>
+                    </actions>
+                </entityPicker>
             </column>
         </form>
         <hbox id="editActions" spacing="true">
