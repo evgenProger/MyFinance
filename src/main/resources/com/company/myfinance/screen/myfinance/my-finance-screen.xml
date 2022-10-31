@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        caption="msg://myFinanceScreen.caption">
+    <data>
+        <collection id="transactionsDc" class="com.company.myfinance.entity.Transaction">
+            <fetchPlan extends="_base">
+                <property name="types" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="transactionsDl">
+                <query>
+                    <![CDATA[select e from Transaction_ e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="typesDc" class="com.company.myfinance.entity.Type">
+            <fetchPlan extends="_base"/>
+            <loader id="typesDl">
+                <query>
+                    <![CDATA[select e from Type_ e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <layout>
+        <vbox spacing="true">
+            <label id="totalAmount"/>
+        </vbox>
+        <entityComboBox  id="typeField" property="type" optionsContainer="typesDc"/>
+        <table id="transactionsTable" height="400px" width="1000px" dataContainer="transactionsDc">
+            <columns>
+                <column id="create_date"/>
+                <column id="transfer_amount"/>
+                <column id="types"/>
+            </columns>
+        </table>
+    </layout>
+</window>

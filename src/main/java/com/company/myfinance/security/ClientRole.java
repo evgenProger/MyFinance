@@ -14,8 +14,8 @@ import io.jmix.securityui.role.annotation.ScreenPolicy;
 
 @ResourceRole(name = "ClientRole", code = "client-role", scope = "UI")
 public interface ClientRole {
-	@MenuPolicy(menuIds = {"BankAccount.browse", "Transaction_.browse"})
-	@ScreenPolicy(screenIds = {"BankAccount.browse", "Transaction_.browse", "BankAccount.edit", "LoginScreen", "MainScreen", "Transaction_.edit", "Type_.edit", "Type_.browse"})
+	@MenuPolicy(menuIds = {"BankAccount.browse", "Transaction_.browse", "Type_.browse", "Client.browse", "MyFinanceScreen"})
+	@ScreenPolicy(screenIds = {"BankAccount.browse", "Transaction_.browse", "BankAccount.edit", "LoginScreen", "MainScreen", "Transaction_.edit", "Type_.edit", "Type_.browse", "Client.browse", "MyFinanceScreen"})
 	void screens();
 	
 	@EntityAttributePolicy(entityClass = Type.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
@@ -34,7 +34,8 @@ public interface ClientRole {
 	@EntityPolicy(entityClass = BankAccount.class, actions = EntityPolicyAction.ALL)
 	void bankAccount();
 	
-	@EntityAttributePolicy(entityClass = Client.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
+	@EntityAttributePolicy(entityClass = Client.class, attributes = {"client", "username"}, action = EntityAttributePolicyAction.MODIFY)
+	@EntityAttributePolicy(entityClass = Client.class, attributes = {"id", "version", "password", "firstName", "lastName", "email", "active", "timeZoneId", "user"}, action = EntityAttributePolicyAction.VIEW)
 	@EntityPolicy(entityClass = Client.class, actions = EntityPolicyAction.ALL)
 	void client();
 }
