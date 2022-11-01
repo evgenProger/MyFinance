@@ -5,12 +5,16 @@ import com.company.myfinance.entity.Type;
 import io.jmix.core.security.CurrentAuthentication;
 import io.jmix.ui.Notifications;
 import io.jmix.ui.component.Button;
+import io.jmix.ui.component.DateField;
 import io.jmix.ui.component.EntityComboBox;
 import io.jmix.ui.model.CollectionContainer;
 import io.jmix.ui.model.CollectionLoader;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 
@@ -31,6 +35,10 @@ public class Report extends Screen {
     private EntityComboBox<Type> typeField;
     @Autowired
     private CollectionContainer<Type> typesDc ;
+    @Autowired
+    private DateField fromDate;
+    @Autowired
+    private DateField toDate;
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
@@ -45,7 +53,13 @@ public class Report extends Screen {
             transactionsDl.load();
             return;
         }
-        List<Transaction> transactions = items.stream().filter(t -> t.getTypes().contains(type)).toList();
+        Date dateFrom = (Date) fromDate.getValue();
+        Date dateTo = (Date) toDate.getValue();
+        LocalDateTime dateFromNew = LocalDateTime.ofInstant(dateFrom.toInstant(), ZoneId.systemDefault());
+        LocalDateTime dateToNew = LocalDateTime.ofInstant(dateTo.toInstant(), ZoneId.systemDefault());
+        List<Transaction> transactions = items.stream().filter(t -> t.getTypes().contains(type)
+        && (t.getCreate_date().isAfter(dateFromNew) || t.getCreate_date().equals(dateFromNew))
+                && (t.getCreate_date().isBefore(dateToNew) || t.getCreate_date().equals(dateToNew))).toList();
         transactionsDc.setItems(transactions);
     }
 
