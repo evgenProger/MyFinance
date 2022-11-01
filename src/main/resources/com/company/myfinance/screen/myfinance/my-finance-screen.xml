@@ -22,23 +22,13 @@
         </collection>
     </data>
     <layout>
-        <form id="form">
-
-            <column width="350px">
-                Выберите тип
-                <entityComboBox id="typeField" property="type" optionsContainer="typesDc"/>
-                <button id="saveButton" caption="Save" primary="true"/>/>
-            </column>
-        </form>
         <filter id="filter" columnsCount="3" dataLoader="transactionsDl">
             <properties include=".*"/>
         </filter>
-
-        <hbox spacing="true"/>
-
+        <entityComboBox id="typeField" caption="Выберите тип" property="type" optionsContainer="typesDc" align="BOTTOM_LEFT"/>
+        <button id="saveButton" caption="Create" primary="true" align="TOP_LEFT"/>
         <table id="transactionsTable" height="300px" width="100%" dataContainer="transactionsDc"
-               aggregatable="true" aggregationStyle="BOTTOM">
-
+               aggregatable="true" aggregationStyle="BOTTOM" editable="true">
             <columns>
                 <column id="create_date"/>
                 <column id="transfer_amount">
