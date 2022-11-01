@@ -22,16 +22,31 @@
         </collection>
     </data>
     <layout>
-        <vbox spacing="true">
-            <label id="totalAmount"/>
-        </vbox>
-        <entityComboBox  id="typeField" property="type" optionsContainer="typesDc"/>
-        <table id="transactionsTable" height="400px" width="1000px" dataContainer="transactionsDc">
+        <form id="form">
+
+            <column width="350px">
+                Выберите тип
+                <entityComboBox id="typeField" property="type" optionsContainer="typesDc"/>
+                <button id="saveButton" caption="Save" primary="true"/>/>
+            </column>
+        </form>
+        <filter id="filter" columnsCount="3" dataLoader="transactionsDl">
+            <properties include=".*"/>
+        </filter>
+
+        <hbox spacing="true"/>
+
+        <table id="transactionsTable" height="300px" width="100%" dataContainer="transactionsDc"
+               aggregatable="true" aggregationStyle="BOTTOM">
+
             <columns>
                 <column id="create_date"/>
-                <column id="transfer_amount"/>
+                <column id="transfer_amount">
+                    <aggregation type="SUM" />
+            </column>
                 <column id="types"/>
             </columns>
         </table>
+        <hbox spacing="true"/>
     </layout>
 </window>

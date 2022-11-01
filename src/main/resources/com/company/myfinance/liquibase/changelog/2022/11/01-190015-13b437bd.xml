@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="myFinance">
+        <dropForeignKeyConstraint baseTableName="REPORT_EXECUTION" constraintName="FK_REPORT_EXEC_TO_REPORT"/>
+    </changeSet>
+    <changeSet id="2" author="myFinance">
+        <dropForeignKeyConstraint baseTableName="REPORT_TEMPLATE" constraintName="FK_REPORT_TEMPLATE_TO_REPORT"/>
+    </changeSet>
+    <changeSet id="3" author="myFinance">
+        <dropForeignKeyConstraint baseTableName="REPORT_REPORT" constraintName="FK_REPORT_TO_DEF_TEMPLATE"/>
+    </changeSet>
+    <changeSet id="4" author="myFinance">
+        <dropForeignKeyConstraint baseTableName="REPORT_REPORT" constraintName="FK_REPORT_TO_REPORT_GROUP"/>
+    </changeSet>
+    <changeSet id="5" author="myFinance">
+        <dropTable cascadeConstraints="true" tableName="REPORT_EXECUTION"/>
+    </changeSet>
+    <changeSet id="6" author="myFinance">
+        <dropTable cascadeConstraints="true" tableName="REPORT_GROUP"/>
+    </changeSet>
+    <changeSet id="7" author="myFinance">
+        <dropTable cascadeConstraints="true" tableName="REPORT_REPORT"/>
+    </changeSet>
+    <changeSet id="8" author="myFinance">
+        <dropTable cascadeConstraints="true" tableName="REPORT_TEMPLATE"/>
+    </changeSet>
+</databaseChangeLog>
