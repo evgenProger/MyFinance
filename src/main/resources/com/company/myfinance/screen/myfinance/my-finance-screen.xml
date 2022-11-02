@@ -31,12 +31,12 @@
                         captionAsHtml="true" align="BOTTOM_LEFT"/>
             </hbox>
         </buttonsPanel>
-        <table id="transactionsTable" height="200px" width="100%" dataContainer="transactionsDc"
+        <table id="transactionsTable" width="100%" dataContainer="transactionsDc"
                aggregatable="true" aggregationStyle="BOTTOM" editable="true" box.expandRatio="1.0">
             <columns>
                 <column id="create_date"/>
                 <column id="transfer_amount">
-                    <aggregation type="SUM"/>
+                    <aggregation type="SUM" />
                 </column>
                 <column id="types"/>
             </columns>
