@@ -17,7 +17,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
-
 @UiController("Report")
 @UiDescriptor("my-finance-screen.xml")
 public class Report extends Screen {
@@ -64,6 +63,12 @@ public class Report extends Screen {
         List<Transaction> items = transactionsDc.getItems();
         Date dateFrom = (Date) fromDate.getValue();
         Date dateTo = (Date) toDate.getValue();
+        if (dateTo == null) {
+            dateTo = new Date();
+        }
+        if (dateFrom == null) {
+            dateFrom = new Date(0);
+        }
         LocalDateTime dateFromNew = LocalDateTime.ofInstant(dateFrom.toInstant(), ZoneId.systemDefault());
         LocalDateTime dateToNew = LocalDateTime.ofInstant(dateTo.toInstant(), ZoneId.systemDefault());
         List<Transaction> transactions = items.stream().filter(t -> (t.getCreate_date().isAfter(dateFromNew)
@@ -78,6 +83,4 @@ public class Report extends Screen {
         findByType();
         findByDate();
     }
-
-
 }
