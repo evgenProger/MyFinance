@@ -53,6 +53,4 @@ public class Report extends Screen {
     public void onSaveButtonClick(Button.ClickEvent event) {
         findByType();
     }
-
-
 }
