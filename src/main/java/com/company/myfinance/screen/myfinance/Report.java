@@ -63,6 +63,7 @@ public class Report extends Screen {
         transactionsDc.setItems(transactions);
     }
 
+
     @Subscribe("saveButton")
     public void onSaveButtonClick(Button.ClickEvent event) {
         findByType();

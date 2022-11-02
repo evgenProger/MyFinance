@@ -22,23 +22,27 @@
         </collection>
     </data>
     <layout>
-        <filter id="filter" columnsCount="3" dataLoader="transactionsDl">
-            <properties include=".*"/>
-        </filter>
-        <dateField id="fromDate" caption="Начало периода" property="create_date" align="BOTTOM_LEFT"/>
-        <dateField id="toDate" caption="Конец периода" property="create_date" align="BOTTOM_LEFT"/>
-        <entityComboBox id="typeField" caption="Выберите тип" property="type" optionsContainer="typesDc" align="BOTTOM_LEFT"/>
-        <button id="saveButton" caption="Create" primary="true" align="TOP_LEFT"/>
-        <table id="transactionsTable" height="300px" width="100%" dataContainer="transactionsDc"
-               aggregatable="true" aggregationStyle="BOTTOM" editable="true">
+        <buttonsPanel alwaysVisible="true" spacing="true">
+            <hbox spacing="true">
+                <dateField id="fromDate" caption="Начало периода" property="create_date"/>
+                <dateField id="toDate" caption="Конец периода" property="create_date"/>
+                <entityComboBox id="typeField" caption="Выберите тип" property="type" optionsContainer="typesDc"/>
+                <button id="saveButton" caption="Create" primary="true"
+                        captionAsHtml="true" align="BOTTOM_LEFT"/>
+
+
+
+            </hbox>
+        </buttonsPanel>
+        <table id="transactionsTable" height="200px" width="100%" dataContainer="transactionsDc"
+               aggregatable="true" aggregationStyle="BOTTOM" editable="true" box.expandRatio="1.0">
             <columns>
                 <column id="create_date"/>
                 <column id="transfer_amount">
-                    <aggregation type="SUM" />
-            </column>
+                    <aggregation type="SUM"/>
+                </column>
                 <column id="types"/>
             </columns>
         </table>
-        <hbox spacing="true"/>
     </layout>
 </window>
