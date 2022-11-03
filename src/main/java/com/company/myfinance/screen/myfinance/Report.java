@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @UiController("Report")
 @UiDescriptor("my-finance-screen.xml")
@@ -47,27 +47,36 @@ public class Report extends Screen {
         typesDl.load();
     }
 
+    private Transaction sum(List<Transaction> transactions, Type type) {
+        long totalSum = transactions.stream().filter(t -> t.getTypes().contains(type))
+                .mapToLong(t -> t.getTransfer_amount().longValue()).sum();
+        if (transactions.stream().anyMatch(t -> t.getTypes().contains(type))) {
+            Transaction transaction = transactions.stream().filter(t -> t.getTypes().contains(type)).findFirst().get();
+            transaction.setTransfer_amount(new BigDecimal(totalSum));
+            return transaction;
+        }
+        return null;
+    }
+
     private void findByType() {
-        transactionsDl.load();
         List<Transaction> temp = new ArrayList<>();
         Type type = typeField.getValue();
-        List<Transaction> items = transactionsDc.getItems();
+        List<Transaction> transactionsDcItems = transactionsDc.getItems();
+        List<Type> typesDcItems = typesDc.getItems();
         if (type == null) {
-            transactionsDl.load();
-            return;
+            List<Transaction> finalTemp = temp;
+            typesDcItems.forEach(t -> finalTemp.add(sum(transactionsDcItems, t)));
+        } else {
+            temp.add(sum(transactionsDcItems, type));
         }
-        List<Transaction> transactions = items.stream().filter(t -> t.getTypes()
-                        .contains(type))
-                        .toList();
-        long totalSum = transactions.stream().mapToLong(t -> t.getTransfer_amount().longValue()).sum();
-        Transaction transaction = transactions.get(0);
-        transaction.setTransfer_amount(new BigDecimal(totalSum));
-        temp.add(transaction);
+        temp = temp.stream().filter(Objects::nonNull).toList();
         transactionsDc.setItems(temp);
     }
 
     private void findByDate() {
+        transactionsDl.load();
         List<Transaction> items = transactionsDc.getItems();
+        Type type = typeField.getValue();
         Date dateFrom = (Date) fromDate.getValue();
         Date dateTo = (Date) toDate.getValue();
         if (dateTo == null) {
@@ -85,9 +94,13 @@ public class Report extends Screen {
         transactionsDc.setItems(transactions);
     }
 
+
+
     @Subscribe("saveButton")
     public void onSaveButtonClick(Button.ClickEvent event) {
-        findByType();
         findByDate();
+        findByType();
     }
+
+
 }
