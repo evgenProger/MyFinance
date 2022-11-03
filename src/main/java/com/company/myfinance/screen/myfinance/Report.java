@@ -12,8 +12,10 @@ import io.jmix.ui.model.CollectionLoader;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +49,7 @@ public class Report extends Screen {
 
     private void findByType() {
         transactionsDl.load();
+        List<Transaction> temp = new ArrayList<>();
         Type type = typeField.getValue();
         List<Transaction> items = transactionsDc.getItems();
         if (type == null) {
@@ -56,7 +59,11 @@ public class Report extends Screen {
         List<Transaction> transactions = items.stream().filter(t -> t.getTypes()
                         .contains(type))
                         .toList();
-        transactionsDc.setItems(transactions);
+        long totalSum = transactions.stream().mapToLong(t -> t.getTransfer_amount().longValue()).sum();
+        Transaction transaction = transactions.get(0);
+        transaction.setTransfer_amount(new BigDecimal(totalSum));
+        temp.add(transaction);
+        transactionsDc.setItems(temp);
     }
 
     private void findByDate() {

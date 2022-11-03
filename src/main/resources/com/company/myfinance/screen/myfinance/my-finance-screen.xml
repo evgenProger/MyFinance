@@ -31,15 +31,13 @@
                         captionAsHtml="true" align="BOTTOM_LEFT"/>
             </hbox>
         </buttonsPanel>
-        <table id="transactionsTable" width="100%" dataContainer="transactionsDc"
-               aggregatable="true" aggregationStyle="BOTTOM" editable="true" box.expandRatio="1.0">
-            <columns>
-                <column id="create_date"/>
-                <column id="transfer_amount">
-                    <aggregation type="SUM" />
-                </column>
-                <column id="types"/>
-            </columns>
-        </table>
+            <table id="transactionsTable" width="100%" dataContainer="transactionsDc"
+                   aggregatable="true"  editable="true" box.expandRatio="1.0">
+                <columns>
+                    <column id="types"/>
+                    <column id="transfer_amount">
+                    </column>
+                </columns>
+            </table>
     </layout>
 </window>
