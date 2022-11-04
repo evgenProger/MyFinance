@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
@@ -42,17 +41,16 @@ public class Transaction {
     @Version
     private Integer version;
 
-    @JoinTable(name = "TYPE_TRANSACTION_LINK", joinColumns = @JoinColumn(name = "TRANSACTION_ID",
-            referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "TYPE_ID", referencedColumnName = "ID"))
-    @ManyToMany
-    private List<Type> types;
+    @JoinColumn
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Type types;
 
-    public List<Type> getTypes() {
-        return types;
+    public void setTypes(Type types) {
+        this.types = types;
     }
 
-    public void setTypes(List<Type> types) {
-        this.types = types;
+    public Type getTypes() {
+        return types;
     }
 
     public BigDecimal getTransfer_amount() {

@@ -7,12 +7,8 @@
         <collection id="transactionsDc"
                     class="com.company.myfinance.entity.Transaction">
             <fetchPlan extends="_base">
-                <property name="from_acc" fetchPlan="_base">
-                    <property name="client" fetchPlan="_base"/>
-                </property>
-                <property name="to_acc" fetchPlan="_base">
-                    <property name="client" fetchPlan="_base"/>
-                </property>
+                <property name="from_acc" fetchPlan="_base"/>
+                <property name="to_acc" fetchPlan="_base"/>
                 <property name="types" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="transactionsDl">
@@ -56,6 +52,7 @@
                 <column id="to_acc"/>
                 <column id="create_date"/>
                 <column id="transfer_amount"/>
+                <column id="types"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"

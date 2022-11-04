@@ -4,7 +4,7 @@
     <data>
         <collection id="transactionsDc" class="com.company.myfinance.entity.Transaction">
             <fetchPlan extends="_base">
-                <property name="types" fetchPlan="_base"/>
+<!--                <property name="types" fetchPlan="_base"/>-->
                 <property name="from_acc" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="transactionsDl">

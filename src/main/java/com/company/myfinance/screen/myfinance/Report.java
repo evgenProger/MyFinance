@@ -57,10 +57,10 @@ public class Report extends Screen {
 
 
     private Transaction sum(List<Transaction> transactions, Type type) {
-        long totalSum = transactions.stream().filter(t -> t.getTypes().contains(type))
+        long totalSum = transactions.stream().filter(t -> t.getTypes().equals(type))
                 .mapToLong(t -> t.getTransfer_amount().longValue()).sum();
-        if (transactions.stream().anyMatch(t -> t.getTypes().contains(type))) {
-            Transaction transaction = transactions.stream().filter(t -> t.getTypes().contains(type)).findFirst().get();
+        if (transactions.stream().anyMatch(t -> t.getTypes().equals(type))) {
+            Transaction transaction = transactions.stream().filter(t -> t.getTypes().equals(type)).findFirst().get();
             transaction.setTransfer_amount(new BigDecimal(totalSum));
             return transaction;
         }
