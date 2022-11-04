@@ -19,8 +19,7 @@ import java.util.UUID;
 @JmixEntity
 @Entity
 @Table(name = "USER_", indexes = {
-        @Index(name = "IDX_USER__ON_USERNAME", columnList = "USERNAME", unique = true),
-        @Index(name = "IDX_USER__CLIENT", columnList = "CLIENT_ID")
+        @Index(name = "IDX_USER__ON_USERNAME", columnList = "USERNAME", unique = true)
 })
 public class User implements JmixUserDetails, HasTimeZone {
 
@@ -28,10 +27,6 @@ public class User implements JmixUserDetails, HasTimeZone {
     @Column(name = "ID", nullable = false)
     @JmixGeneratedValue
     private UUID id;
-
-    @JoinColumn(name = "CLIENT_ID")
-    @OneToOne(fetch = FetchType.LAZY)
-    private Client client;
 
     @Version
     @Column(name = "VERSION", nullable = false)
@@ -64,14 +59,6 @@ public class User implements JmixUserDetails, HasTimeZone {
     @Transient
     protected Collection<? extends GrantedAuthority> authorities;
 
-    public Client getClient() {
-        return client;
-    }
-    
-    public void setClient(Client client) {
-        this.client = client;
-    }
-    
     public UUID getId() {
         return id;
     }

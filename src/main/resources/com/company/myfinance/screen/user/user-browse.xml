@@ -6,7 +6,6 @@
         <collection id="usersDc"
                     class="com.company.myfinance.entity.User">
             <fetchPlan extends="_base">
-                <property name="client" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="usersDl">
                 <query>
@@ -57,7 +56,6 @@
                 <column id="email"/>
                 <column id="timeZoneId"/>
                 <column id="active"/>
-                <column id="client"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"

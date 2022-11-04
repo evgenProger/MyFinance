@@ -6,7 +6,6 @@
         <instance id="userDc"
                   class="com.company.myfinance.entity.User">
             <fetchPlan extends="_base">
-                <property name="client" fetchPlan="_base"/>
             </fetchPlan>
             <loader/>
         </instance>
@@ -43,7 +42,6 @@
                 <textField id="emailField" property="email"/>
                 <comboBox id="timeZoneField" property="timeZoneId"/>
                 <checkBox id="activeField" property="active"/>
-                <entityPicker id="clientField" property="client"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">

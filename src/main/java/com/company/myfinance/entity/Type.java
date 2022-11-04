@@ -10,33 +10,34 @@ import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
-@Table(name = "TYPE_", indexes = {@Index(name = "IDX_TYPE__CLIENT", columnList = "CLIENT_ID")})
+@Table(name = "TYPE_", indexes = {
+        @Index(name = "IDX_TYPE__CLIENT", columnList = "CLIENT_ID")
+})
 @Entity(name = "Type_")
 public class Type {
     @JmixGeneratedValue
     @Column(name = "ID", nullable = false)
     @Id
     private UUID id;
-    
+
     @JoinTable(name = "TYPE_TRANSACTION_LINK", joinColumns = @JoinColumn(name = "TYPE_ID", referencedColumnName = "ID"
     ), inverseJoinColumns = @JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "ID"))
     @ManyToMany
     private List<Transaction> transactions;
-    
-    @JoinColumn(name = "CLIENT_ID", nullable = false)
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+
+    @JoinColumn(name = "CLIENT_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Client client;
-    
+
     @InstanceName
     @Column(name = "NAME", nullable = false)
     @NotNull
     private String name;
-    
+
     @Column(name = "VERSION", nullable = false)
     @Version
     private Integer version;
-    
+
     public List<Transaction> getTransactions() {
         return transactions;
     }

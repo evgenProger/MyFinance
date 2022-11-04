@@ -15,14 +15,14 @@ import java.util.UUID;
 public interface ClientRlRole {
     @JpqlRowLevelPolicy(
             entityClass = BankAccount.class,
-            where = "{E}.client.user.id = :current_user_id")
+            where = "{E}.client.id = :current_user_id")
+
     void bankAccount();
 
     @JpqlRowLevelPolicy(
             entityClass = Client.class,
-            where = "{E}.user.id = :current_user_id")
+            where = "{E}.id = :current_user_id")
     void client();
-
 
     @PredicateRowLevelPolicy(
             entityClass = Transaction.class,
@@ -31,17 +31,17 @@ public interface ClientRlRole {
         return transaction -> {
             UserDetails userDetails = auth.getUser();
             if (userDetails instanceof User) {
-                UUID id =  ((User) userDetails).getId();
+                UUID id = ((User) userDetails).getId();
                 BankAccount to = transaction.getTo_acc();
                 BankAccount from = transaction.getFrom_acc();
-                if (to == null)  {
-                    return id.equals(from.getClient().getUser().getId());
+                if (to == null) {
+                    return id.equals(from.getClient().getId());
                 }
                 if (from == null) {
-                    return id.equals(to.getClient().getUser().getId());
+                    return id.equals(to.getClient().getId());
                 }
-                return id.equals(from.getClient().getUser().getId())
-                        || id.equals(to.getClient().getUser().getId());
+                return id.equals(from.getClient().getId())
+                        || id.equals(to.getClient().getId());
             }
             return false;
         };
@@ -49,6 +49,6 @@ public interface ClientRlRole {
 
     @JpqlRowLevelPolicy(
             entityClass = Type.class,
-            where = "{E}.client.user.id = :current_user_id")
+            where = "{E}.client.id = :current_user_id")
     void type();
 }
