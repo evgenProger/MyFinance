@@ -80,14 +80,14 @@ public class LoginScreen extends Screen {
     }
 
     private void initDefaultCredentials() {
-        String defaultUsername = "";
+        String defaultUsername = "admin";
         if (!StringUtils.isBlank(defaultUsername) && !"<disabled>".equals(defaultUsername)) {
             usernameField.setValue(defaultUsername);
         } else {
             usernameField.setValue("");
         }
 
-        String defaultPassword = "";
+        String defaultPassword = "admin";
         if (!StringUtils.isBlank(defaultPassword) && !"<disabled>".equals(defaultPassword)) {
             passwordField.setValue(defaultPassword);
         } else {
