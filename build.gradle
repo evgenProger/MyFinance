@@ -34,8 +34,10 @@ dependencies {
     implementation 'io.jmix.datatools:jmix-datatools-ui-starter'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.5.0'
 
-    runtimeOnly 'org.hsqldb:hsqldb'
+
+ //   runtimeOnly 'org.hsqldb:hsqldb'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
