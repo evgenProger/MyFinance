@@ -2,28 +2,28 @@ package com.company.myfinance.screen.myfinance;
 
 import com.company.myfinance.entity.Transaction;
 import com.company.myfinance.entity.Type;
-import io.jmix.core.security.CurrentAuthentication;
-import io.jmix.ui.Notifications;
 import io.jmix.ui.component.Button;
+import io.jmix.ui.component.ComboBox;
 import io.jmix.ui.component.DateField;
-import io.jmix.ui.component.EntityComboBox;
 import io.jmix.ui.model.CollectionContainer;
 import io.jmix.ui.model.CollectionLoader;
-import io.jmix.ui.screen.*;
+import io.jmix.ui.screen.Screen;
+import io.jmix.ui.screen.Subscribe;
+import io.jmix.ui.screen.UiController;
+import io.jmix.ui.screen.UiDescriptor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 @UiController("Report")
 @UiDescriptor("my-finance-screen.xml")
 public class Report extends Screen {
-    @Autowired
-    private CurrentAuthentication currentAuthentication;
     @Autowired
     private CollectionLoader<Transaction> transactionsDl;
     @Autowired
@@ -31,21 +31,30 @@ public class Report extends Screen {
     @Autowired
     private CollectionLoader<Type> typesDl;
     @Autowired
-    private Notifications notifications;
-    @Autowired
-    private EntityComboBox<Type> typeField;
-    @Autowired
     private CollectionContainer<Type> typesDc;
     @Autowired
     private DateField fromDate;
     @Autowired
     private DateField toDate;
+    @Autowired
+    private ComboBox<String> operation;
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
         transactionsDl.load();
         typesDl.load();
+        findByType();
     }
+
+    @Subscribe
+    public void onInit(InitEvent event) {
+        List<String> list = new ArrayList<>();
+        list.add("Снятие");
+        list.add("Пополнение");
+        list.add("Перевод");
+        operation.setOptionsList(list);
+    }
+
 
     private Transaction sum(List<Transaction> transactions, Type type) {
         long totalSum = transactions.stream().filter(t -> t.getTypes().contains(type))
@@ -60,23 +69,16 @@ public class Report extends Screen {
 
     private void findByType() {
         List<Transaction> temp = new ArrayList<>();
-        Type type = typeField.getValue();
         List<Transaction> transactionsDcItems = transactionsDc.getItems();
         List<Type> typesDcItems = typesDc.getItems();
-        if (type == null) {
-            List<Transaction> finalTemp = temp;
-            typesDcItems.forEach(t -> finalTemp.add(sum(transactionsDcItems, t)));
-        } else {
-            temp.add(sum(transactionsDcItems, type));
-        }
+        List<Transaction> finalTemp = temp;
+        typesDcItems.forEach(t -> finalTemp.add(sum(transactionsDcItems, t)));
         temp = temp.stream().filter(Objects::nonNull).toList();
         transactionsDc.setItems(temp);
     }
 
     private void findByDate() {
-        transactionsDl.load();
         List<Transaction> items = transactionsDc.getItems();
-        Type type = typeField.getValue();
         Date dateFrom = (Date) fromDate.getValue();
         Date dateTo = (Date) toDate.getValue();
         if (dateTo == null) {
@@ -94,13 +96,31 @@ public class Report extends Screen {
         transactionsDc.setItems(transactions);
     }
 
+    private void findByOperation() {
+        transactionsDl.load();
+        String valueOperation = operation.getValue();
+        List<Transaction> transactionsDcItems = transactionsDc.getItems();
+        if (valueOperation == null) {
+            return;
+        }
+        switch (valueOperation) {
+            case "Снятие" ->
+                    transactionsDc.setItems(transactionsDcItems.stream().filter(t -> t.getTo_acc() == null).toList());
+            case "Пополнение" ->
+                    transactionsDc.setItems(transactionsDcItems.stream().filter(t -> t.getFrom_acc() == null).toList());
+            case "Перевод" -> transactionsDc.setItems(transactionsDcItems.stream().filter(t -> t.getTo_acc() != null
+                    && t.getFrom_acc() != null).toList());
+        }
 
+    }
 
     @Subscribe("saveButton")
     public void onSaveButtonClick(Button.ClickEvent event) {
+        findByOperation();
         findByDate();
         findByType();
     }
-
-
 }
+
+
+

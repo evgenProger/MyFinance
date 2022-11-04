@@ -5,6 +5,7 @@
         <collection id="transactionsDc" class="com.company.myfinance.entity.Transaction">
             <fetchPlan extends="_base">
                 <property name="types" fetchPlan="_base"/>
+                <property name="from_acc" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="transactionsDl">
                 <query>
@@ -26,8 +27,10 @@
             <hbox spacing="true">
                 <dateField id="fromDate" caption="Начало периода" property="create_date"/>
                 <dateField id="toDate" caption="Конец периода" property="create_date"/>
-                <entityComboBox id="typeField" caption="Выберите тип" property="type" optionsContainer="typesDc"/>
-                <button id="saveButton" caption="Create" primary="true"
+
+                <comboBox id="operation"
+                          caption="Вид операции"/>
+                <button id="saveButton" caption="Показать" primary="true"
                         captionAsHtml="true" align="BOTTOM_LEFT"/>
             </hbox>
         </buttonsPanel>
